@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class IssueController{
+public class IssueController {
 
     @Autowired
     private IIssueService issueService;
@@ -33,9 +33,9 @@ public class IssueController{
     @GetMapping("/issue/getbyid/{issueId}")
     @ResponseBody
     public ResponseEntity<IssueDto> getById(@PathVariable Long issueId) {
-        try{
+        try {
             IssueDto issue = issueService.getById(issueId);
-            if (issue==null) {
+            if (issue == null) {
                 return ResponseEntity.noContent().build();
             }
             return ResponseEntity.ok(issue);
@@ -49,20 +49,29 @@ public class IssueController{
     public ResponseEntity<String> createIssue(@RequestBody IssueDto issueDto) {
         try {
             issueService.createIssue(issueDto);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Issue creado con exito");
+            return ResponseEntity.status(HttpStatus.CREATED).body("Issue creado con éxito");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear el tema" + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear el tema: " + e.getMessage());
         }
-
     }
 
     @PutMapping("/issue/updateissue")
-    public void updateIssue(@RequestBody IssueDto issueDto) {
-        issueService.updateIssue(issueDto);
+    public ResponseEntity<String> updateIssue(@RequestBody IssueDto issueDto) {
+        try {
+            issueService.updateIssue(issueDto);
+            return ResponseEntity.ok("Issue actualizado con éxito");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al actualizar el tema: " + e.getMessage());
+        }
     }
 
     @DeleteMapping("/issue/deleteissue/{issueId}")
-    public void deleteIssue(@PathVariable Long issueId) {
-        issueService.deleteIssue(issueId);
+    public ResponseEntity<String> deleteIssue(@PathVariable Long issueId) {
+        try {
+            issueService.deleteIssue(issueId);
+            return ResponseEntity.ok("Issue eliminado con éxito");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar el tema: " + e.getMessage());
+        }
     }
 }

@@ -1,7 +1,9 @@
 package com.cursodos.cursodos.controller;
 
 import com.cursodos.cursodos.dto.CursoDto;
+import com.cursodos.cursodos.dto.IssueDto;
 import com.cursodos.cursodos.service.ICursoService;
+import com.cursodos.cursodos.service.IIssueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,20 @@ public class CursoController{
 
     @Autowired
     private ICursoService cursoService;
+
+//    @GetMapping("/curso/getbyid/{cursoId}")
+//    public ResponseEntity<List<IssueDto>> getIssueByCursoId(@PathVariable Long cursoId) {
+//        List<IssueDto> issueByCurso = cursoService.getIssueByCursoId(cursoId);
+//
+//        return ResponseEntity.ok(issueByCurso);
+//    }
+
+    @GetMapping("/curso/getcursobyname/{cursoName}")
+    public ResponseEntity<List<CursoDto>> getCursoByName(@PathVariable String cursoName) {
+        List<CursoDto> listCursoDto = cursoService.getCursoByName(cursoName);
+
+        return ResponseEntity.ok(listCursoDto);
+    }
 
     @GetMapping("/curso/getall")
     public ResponseEntity<List<CursoDto>> getCursos() {
@@ -43,8 +59,6 @@ public class CursoController{
                     .body(null);
         }
     }
-
-
 
     @PostMapping("/curso/create")
     public ResponseEntity<String> createCurso(@RequestBody CursoDto cursoDto) {
