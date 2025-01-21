@@ -147,9 +147,11 @@ public class CursoService implements ICursoService {
 
     public void updateCurso(CursoDto cursoDto) {
         // Validar que los valores requeridos no sean nulos o vacíos
-        if (cursoDto.getCursoId() == null) {
-            throw new IllegalArgumentException("El ID del curso no puede ser nulo.");
+        if (cursoDto.getCursoId() == null || cursoDto.getCursoId() <= 0L) {
+            throw new IllegalArgumentException("El ID del curso no puede ser nulo ni vacío y tampoco puede ser 0 o negativo.");
         }
+
+
         if (cursoDto.getCursoName() == null || cursoDto.getCursoName().isBlank()) {
             throw new IllegalArgumentException("El nombre del curso no puede ser nulo o vacío.");
         }

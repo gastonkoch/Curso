@@ -45,13 +45,33 @@ public class IssueService implements IIssueService{
 
     public void createIssue(IssueDto issueDto) {
         Issue issue = new Issue();
-//        issue.setIssueId(issueDto.getIssueId());
+
+        if (issueDto.getIssueName() == null) {
+            throw new IllegalArgumentException("El nombre del tema no puede ser nulo.");
+        }
+
+        if (issueDto.getIssueDescription() == null) {
+            throw new IllegalArgumentException("La descripcion del tema no puede ser nulo.");
+        }
+
         issue.setIssueDescription(issueDto.getIssueDescription());
         issue.setIssueName(issueDto.getIssueName());
         issueRepository.save(issue);
     }
 
     public void updateIssue(IssueDto issueDto) {
+        if (issueDto.getIssueId() == null || issueDto.getIssueId() <= 0L) {
+            throw new IllegalArgumentException("El Id del tema no puede ser nulo y tampoco puede ser 0 o negativo.");
+        }
+
+        if (issueDto.getIssueName() == null) {
+            throw new IllegalArgumentException("El nombre del tema no puede ser nulo.");
+        }
+
+        if (issueDto.getIssueDescription() == null) {
+            throw new IllegalArgumentException("La descripcion del tema no puede ser nulo.");
+        }
+
         Issue issue = issueRepository.findById(issueDto.getIssueId())
                 .orElseThrow(() -> new RuntimeException("Issue not found with id: " + issueDto.getIssueId()));
 
