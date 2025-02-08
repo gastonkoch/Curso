@@ -1,6 +1,5 @@
 package com.cursodos.cursodos.service;
 
-import com.cursodos.cursodos.dto.CursoDto;
 import com.cursodos.cursodos.dto.IssueDto;
 
 import java.util.List;

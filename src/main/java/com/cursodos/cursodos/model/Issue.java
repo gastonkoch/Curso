@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter @Setter
 @Entity
 public class Issue {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long issueId;
